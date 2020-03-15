@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Documents</title>
+    <title>Items</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}"/>
 </head>
@@ -11,7 +11,6 @@
         <div class="col">
         </div>
         <div class="col">
-       <!--     <a class="btn btn-info" href="#" role="button" th:href="@{/documents/add}">Add</a>-->
             <table class="table table-dark">
                 <thead>
                 <tr>
@@ -25,10 +24,6 @@
                     <td th:text="${item.id}">1</td>
                     <td th:text="${item.name}">name</td>
                     <td th:text="${item.status}">status</td>
-                    <td>
-                     <!--   <a class="btn btn-info" href="#" role="button" th:href="@{/documents/{id}(id=${document.id})}">View</a>
-                        <a class="btn btn-info" href="#" role="button" th:href="@{/documents/{id}/delete(id=${document.id})}">Delete</a>-->
-                    </td>
                 </tr>
                 </tbody>
             </table>

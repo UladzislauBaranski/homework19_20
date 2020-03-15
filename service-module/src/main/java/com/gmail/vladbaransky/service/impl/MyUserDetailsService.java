@@ -14,12 +14,14 @@ public class MyUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
 
-    public MyUserDetailsService(UserService userService) {this.userService = userService;}
+    public MyUserDetailsService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDTO userDTO = userService.loadUserByUsername(username);
-        if (userDTO == null){
+        if (userDTO == null) {
             throw new UsernameNotFoundException("User not found");
         }
         return new AppUser(userDTO);

@@ -19,14 +19,14 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @GetMapping("/item")
-    public String getItems(Model model){
-    List<ItemDTO> items=userService.findItems();
-        System.out.println("controller"+items);
+    public String getItems(Model model) {
+        List<ItemDTO> items = userService.findItemsByRole();
+        System.out.println("controller" + items);
         model.addAttribute("items", items);
         return "item";
     }

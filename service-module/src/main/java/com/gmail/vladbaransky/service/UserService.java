@@ -7,8 +7,10 @@ import java.util.List;
 
 public interface UserService {
     UserDTO loadUserByUsername(String username);
+
     List<UserDTO> findAllUsers();
-    List<ItemDTO> findItems();
-    //List<ItemDTO> getItemList(UserDTO userDTO);
+
+    List<ItemDTO> findItemsByRole();
+
 }
 

@@ -8,8 +8,11 @@ import com.gmail.vladbaransky.repository.model.User;
 import com.gmail.vladbaransky.service.UserService;
 import com.gmail.vladbaransky.service.model.ItemDTO;
 import com.gmail.vladbaransky.service.model.UserDTO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.lang.invoke.MethodHandles;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -18,9 +21,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = LogManager.getLogger(MethodHandles.lookup().lookupClass());
 
-    private UserRepository userRepository;
-    private ItemRepository itemRepository;
+    private final UserRepository userRepository;
+    private final ItemRepository itemRepository;
     private List<ItemDTO> allItemDTOList;
     private List<ItemDTO> allCompletedItemDTOList;
     private String nameUserDTO;
@@ -36,7 +40,7 @@ public class UserServiceImpl implements UserService {
         System.out.println(userDTOList);
         for (UserDTO userDTO : userDTOList) {
             if (username.equals(userDTO.getUsername())) {
-                nameUserDTO=userDTO.getUsername();
+                nameUserDTO = userDTO.getUsername();
                 return userDTO;
             }
         }
@@ -44,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ItemDTO> findItems() {
+    public List<ItemDTO> findItemsByRole() {
         try (Connection connection = itemRepository.getConnection()) {
             connection.setAutoCommit(false);
             try {
@@ -60,23 +64,22 @@ public class UserServiceImpl implements UserService {
                 return getItemList(nameUserDTO);
             } catch (SQLException e) {
                 connection.rollback();
-                //   logger.error(e.getMessage(), e);
+                logger.error(e.getMessage(), e);
             }
         } catch (SQLException e) {
-            // logger.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
         }
         return Collections.emptyList();
     }
 
     private List<ItemDTO> getItemList(String nameUserDTO) {
         if (nameUserDTO.equals("admin")) {
-            System.out.println("allItemDTOList"+allItemDTOList);
+            System.out.println("allItemDTOList" + allItemDTOList);
             return allItemDTOList;
         } else if (nameUserDTO.equals("user")) {
-            System.out.println("allCompletedItemDTOList"+allCompletedItemDTOList);
+            System.out.println("allCompletedItemDTOList" + allCompletedItemDTOList);
             return allCompletedItemDTOList;
-        }
-        else return Collections.emptyList();
+        } else return Collections.emptyList();
     }
 
     @Override
@@ -92,10 +95,10 @@ public class UserServiceImpl implements UserService {
                 return userDTOList;
             } catch (SQLException e) {
                 connection.rollback();
-                //   logger.error(e.getMessage(), e);
+                logger.error(e.getMessage(), e);
             }
         } catch (SQLException e) {
-            // logger.error(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
         }
         return Collections.emptyList();
     }
